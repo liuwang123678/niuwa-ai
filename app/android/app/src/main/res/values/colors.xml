@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#298643</color>
+
+    <!-- 原生启动画面的底色。必须和 Flutter 那边闪屏的底色一致
+         （tokens.dart 的 kNeutral50 / kDarkBg）：不一致的话，
+         系统画面交给 Flutter 的第一帧时会闪一下。 -->
+    <color name="n1_splash_bg">#FBF7F2</color>
+</resources>

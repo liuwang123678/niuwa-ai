@@ -1,0 +1,60 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- ⚠️ 必须声明在 main/ 这一份里，不能只靠 debug/ 那份。
+
+         Flutter 模板只把 INTERNET 写进 src/debug/ 和 src/profile/ 两份 manifest，
+         **release 构建不合并那两份**，于是打出来的正式包里一个权限都没有。没有
+         联网权限时 DNS 解析直接失败，Dart 报出来是：
+
+             Failed host lookup: 'api.deepseek.com'
+             (OS Error: No address associated with hostname, errno = 7)
+
+         看着像"请求模型出错"，其实是这个包根本连不上网。
+
+         这个坑别处都测不出来：Windows 桌面没有权限模型，debug/profile 包因为各自
+         带着那份 manifest 也一切正常——只有"正式包 + 真机"这一种组合会炸。有
+         test/android_manifest_test.dart 盯着，别删。 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:label="niuwa v14"
+        android:name="${applicationName}"
+        android:icon="@mipmap/launcher_icon">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:taskAffinity=""
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <!-- Specifies an Android theme to apply to this Activity as soon as
+                 the Android process has started. This theme is visible to the user
+                 while the Flutter UI initializes. After that, this theme continues
+                 to determine the Window background behind the Flutter UI. -->
+            <meta-data
+              android:name="io.flutter.embedding.android.NormalTheme"
+              android:resource="@style/NormalTheme"
+              />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!-- Don't delete the meta-data below.
+             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+    <!-- Required to query activities that can process text, see:
+         https://developer.android.com/training/package-visibility and
+         https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.
+
+         In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.PROCESS_TEXT"/>
+            <data android:mimeType="text/plain"/>
+        </intent>
+    </queries>
+</manifest>

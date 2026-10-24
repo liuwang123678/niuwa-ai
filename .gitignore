@@ -1,0 +1,49 @@
+# 构建产物：体积大、可重建，永远不进仓库。
+# 注意 app/.gitignore 已经覆盖了 app/ 内部的那一堆，这里是兜底和补漏。
+build/
+app/build/
+app/.dart_tool/
+app/.flutter-plugins
+app/.flutter-plugins-dependencies
+app/windows/flutter/ephemeral/
+app/android/.gradle/
+app/android/local.properties
+app/android/key.properties
+app/**/*.iml
+
+# 图标生成脚本的中间产物（挑造型用的对比表，挑完就删）
+app/assets/icon/_*.png
+
+# 正式签名材料。**绝对不能进仓库**。
+*.jks
+*.keystore
+
+# 临时文件
+*.log
+*.tmp
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 网站上的安装包。是 `flutter build` 的产物，加起来 53 MB，
+# 不该进仓库（而且真推上去 GitHub 也会拒）。要重新生成看 web/README.md。
+web/assets/pkg/
+
+# Windows 便携版打包的中转产物（zip + 它的解包目录），同样是 `flutter build` 的产物。
+# 打包脚本在仓库根目录干活，所以这两样会出现在根上，顺手挡掉。
+niuwa-v5-windows/
+niuwa-v5-windows.zip
+niuwa-v6-windows/
+niuwa-v6-windows.zip
+
+# 还有个坑记一下：PUB_CACHE 千万别写成 `D:pub-cache`（少了冒号后的反斜杠）。
+# 那会被当成"当前盘符下的相对路径"，于是在 app/ 里悄悄造一个同名目录，
+# 而 pub 自己用的是 D:\pub-cache，两边对不上，构建报
+# "Windows paths with drive letter must be absolute"。
+
+# wrangler 部署时自己建的本地状态
+.wrangler/
+
+# 用户从网站下载解压出来的 Portable 包（含 userdata，绝不能进 git）
+niuwa-v*-windows/
+niuwa-v*-windows.zip

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>牛蛙 niuwa · 一个能好好说话的地方</title>
+<meta name="description" content="牛蛙是一个陪你、也替你干活的 AI Agent。它记得你说过的事，会在你不想听真话的时候说实话；也能在你电脑上真的动手——写脚本、跑命令、改文件、查资料。模型随你换，记录只留在你自己的设备上。">
+<meta name="theme-color" content="#FBF7F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1B1814" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/app_icon.png">
+<meta property="og:title" content="牛蛙 niuwa · 一个能好好说话的地方">
+<meta property="og:description" content="陪你，也替你干活。记得住，能写代码、跑代码，不绑厂商。">
+<meta property="og:image" content="assets/img/app_icon.png">
+<meta property="og:type" content="website">
+<link rel="preload" href="assets/fonts/SpaceGrotesk.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script>
+  /* 滚动出现的元素默认是 opacity:0 的。这段得在样式生效之前跑，
+     否则会先闪一下再藏起来。没 JS 的话 html 上就没有 .js，
+     CSS 里那条 `html:not(.js) .reveal` 会把它们全部露出来。 */
+  document.documentElement.classList.add('js');
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">跳到正文</a>
+
+<!-- ══════════════════ 顶栏 ══════════════════ -->
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="brand" href="#top" aria-label="回到顶部">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true">
+        <use href="#frog-body"></use>
+      </svg>
+      <span class="brand__name">牛蛙</span>
+      <span class="brand__ver">v14</span>
+    </a>
+    <nav class="nav__links" aria-label="页内导航">
+      <a href="#what">是什么</a>
+      <a href="#skills">技能</a>
+      <a href="#demo">演示</a>
+      <a href="#work">动手</a>
+      <a class="nav__cta" href="#download">下载</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ══════════════════ 首屏 ══════════════════ -->
+<section class="hero" id="top">
+  <div class="wrap hero__in">
+
+    <div class="hero__text">
+      <p class="eyebrow reveal">陪你，也替你干活 <span class="dot">·</span> niuwa v14</p>
+      <h1 class="hero__h1 reveal">一个能<br>好好说话的<br><em>地方</em></h1>
+      <p class="hero__lede reveal">
+        牛蛙不是助手，也不是客服。它记得你上周随口提过的事，会在你不想听真话的时候说实话，
+        也会真的动手：替你查资料、写个脚本跑一遍、把文件改成你要的样子。
+      </p>
+      <div class="hero__cta reveal">
+        <a class="btn btn--primary" href="#download">
+          下载 <span class="btn__sub">安卓版</span>
+        </a>
+        <a class="btn btn--ghost" href="#download">
+          Windows <span class="btn__sub">便携版</span>
+        </a>
+      </div>
+      <p class="hero__meta reveal">
+        免费 <span class="sep">/</span> 不绑定任何模型厂商 <span class="sep">/</span> 记录只留在你自己的设备上
+      </p>
+    </div>
+
+    <div class="hero__art reveal">
+      <!-- 青蛙的瞳孔是「挖空」——JS 把这俩洞挪一挪，它就在看你。
+           这不是装饰：出厂造型里瞳孔刻意画小（占眼睛 0.44），
+           就是为了这个"安静地看着你"的神态。 -->
+      <svg class="frog" viewBox="0 0 100 100" role="img" aria-label="牛蛙的标志：一只圆角方脸、两只凸眼睛的牛蛙">
+        <use href="#frog-body"></use>
+      </svg>
+      <div class="hero__glow" aria-hidden="true"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 它是什么 ══════════════════ -->
+<section class="section what" id="what">
+  <div class="wrap wrap--narrow">
+    <p class="label reveal">它的出厂人设</p>
+    <blockquote class="pull reveal">
+      <p>用户装你，是因为想有个说话的地方。<br>别把这个地方变成一个客服窗口。</p>
+      <footer><code>assets/persona/default.md</code> · 最后一段</footer>
+    </blockquote>
+    <p class="what__body reveal">
+      这段文字是牛蛙出厂时带的自我认知，一字不改地进每一次对话的最前面。
+      它管的是语气和分寸：不回声、不卖萌、不追问、不承诺做不到的事。
+      你觉得不合适可以整段重写——改它等于改它是谁，所以那个输入框摆在设置页最显眼的位置。
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════ 三件事 ══════════════════ -->
+<section class="section three">
+  <div class="wrap">
+    <div class="three__grid">
+
+      <article class="feat reveal">
+        <h3 class="feat__h">能干活<span class="feat__num">01</span></h3>
+        <p class="feat__p">
+          十个技能：陪你说说话、把要紧的记下来、联网调研、用浏览器点网页、写代码跑代码、
+          排错、写测试、做计划、交付前自查，还有女娲。
+          你说「帮我查一下」，它是真的去查，然后给你带来源的结论——不是凭印象编一段。
+          你说「写个脚本算一下」，它会写、会存到你指定的地方、会跑起来，把报错自己修完再给你结果。
+        </p>
+        <p class="feat__x">干活的时候它会说清楚在干什么，不闷头搞半天；做不成就说做不成，说清楚卡在哪。</p>
+      </article>
+
+      <article class="feat reveal">
+        <h3 class="feat__h">记得住<span class="feat__num">02</span></h3>
+        <p class="feat__p">
+          它有一份跨会话的记忆。你提过的偏好、习惯、正在做的事，下次不用再说一遍。
+          记什么由它自己判断——判断标准是「这条信息两周后、在另一场对话里还有用吗」，
+          记太多反而会把重点淹掉。
+        </p>
+        <p class="feat__x">错的做法是像念档案一样复述。所以它只会顺口问一句「今天还熬夜吗」。</p>
+      </article>
+
+      <article class="feat reveal">
+        <h3 class="feat__h">不绑厂商<span class="feat__num">03</span></h3>
+        <p class="feat__p">
+          接的是通用的 OpenAI 兼容接口。预置了几家常用的，也可以自己填地址——
+          哪家便宜、哪家快、哪家说话合你意，你换就是了。
+        </p>
+        <p class="feat__x">每家的 Key 分开存，换一家不会把上一家冲掉；Key 进系统安全存储，不进聊天记录。</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 技能 ══════════════════ -->
+<section class="section skills" id="skills">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="label">随身带着的</p>
+      <h2 class="sec-h2">十个技能</h2>
+    </header>
+
+    <ol class="skl">
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">companion-talk</span>
+          <span class="skl__name">陪伴对话</span>
+        </div>
+        <span class="skl__desc">
+          先分清你要的是<strong>解决</strong>还是<strong>被听见</strong>。「怎么才能早睡」和「我又熬夜了，烦死了」是两件事，回的也该是两种。
+        </span>
+      </li>
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">note-taking</span>
+          <span class="skl__name">记忆</span>
+        </div>
+        <span class="skl__desc">
+          把对话里值得长期留住的挑出来存下：偏好、习惯、身份、计划、重要日期。你明确说「记住这个」它也照办。
+        </span>
+      </li>
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">web-research</span>
+          <span class="skl__name">联网调研</span>
+        </div>
+        <span class="skl__desc">
+          问的是训练数据里没有、或者可能过时的东西时走这条。给结论也给出处，不给你一段听着很像真的话。
+        </span>
+      </li>
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">browser-task</span>
+          <span class="skl__name">浏览器</span>
+        </div>
+        <span class="skl__desc">
+          打开网页、找到元素、点击、填表、翻页。看一步、想一步、做一步、再看一步——真的在页面上动手。
+        </span>
+      </li>
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">coding</span>
+          <span class="skl__name">写代码</span>
+        </div>
+        <span class="skl__desc">
+          写一段、跑起来、读报错、改一改、再跑——这个循环它自己走。跑在你自己的电脑上，
+          用的是你真装了的 Python 和 Node。<strong>手机上只能跑 JavaScript</strong>，跑不了 Python，这一条它自己会说清楚。
+        </span>
+      </li>
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">debugging</span>
+          <span class="skl__name">排错</span>
+        </div>
+        <span class="skl__desc">
+          出错时先复现，把原始报错读一遍，再用搜索缩小范围。一次只改一个地方，改根因不打补丁。
+          <strong>不许为了让测试变绿去改测试。</strong>
+        </span>
+      </li>
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">testing</span>
+          <span class="skl__name">写测试</span>
+        </div>
+        <span class="skl__desc">
+          先把「怎么算对」写成一条现在会失败的测试，再写最小的实现让它通过。没红过的测试不算数，
+          mock 掉正要验的那一层也不算。
+        </span>
+      </li>
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">planning</span>
+          <span class="skl__name">做计划</span>
+        </div>
+        <span class="skl__desc">
+          要动三个以上文件、或者步骤多到容易漏时，先摸清现状，再列一份每一步都带验收标准的计划。
+          做到一半路不通会停下来告诉你，不默默换路。
+        </span>
+      </li>
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">review</span>
+          <span class="skl__name">交付前自查</span>
+        </div>
+        <span class="skl__desc">
+          需求逐条对、改动范围有没有超、错误路径处理了吗、测试真跑了吗、能不能回滚。区分「验证过」和「看着对」。
+        </span>
+      </li>
+      <li class="skl__row reveal">
+        <div class="skl__head">
+          <span class="skl__id">nuwa</span>
+          <span class="skl__name">女娲</span>
+        </div>
+        <span class="skl__desc">
+          输入一个人名，它去调研并提炼出那个人的思维框架，生成一个能直接拿来用的技能。不是复制一个人，是把他的认知方式写成一套能跑的东西。
+        </span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════════════ 演示 ══════════════════ -->
+<section class="section demo" id="demo">
+  <div class="wrap demo__grid">
+
+    <div class="demo__side">
+      <p class="label reveal">它说起话来是什么样</p>
+      <h2 class="sec-h2 reveal">短。具体。<br>有它自己的判断。</h2>
+      <p class="demo__note reveal">
+        它大多数时候只回一两句。不用「听起来很不容易」这种谁都能说的空话，
+        不附和你说的每一句，也不刻意卖萌或深沉。
+      </p>
+      <p class="demo__disclaimer reveal">
+        <strong>下面是演示。</strong>
+        这一段是照着 App 界面重画的预设对话，用来给你看个样子——网页上并没有真的在跑模型，
+        也不会用到你的 API Key。装了 App、填上自己的 Key 之后，说话的是你要的那家模型。
+      </p>
+      <button class="btn btn--quiet reveal" id="replay" type="button">重播这段</button>
+    </div>
+
+    <div class="phone-wrap reveal">
+      <div class="phone" role="img" aria-label="牛蛙 App 的对话界面演示，内容为预设对话">
+        <div class="phone__bar" aria-hidden="true">
+          <span class="phone__mark">
+            <svg viewBox="0 0 100 100"><use href="#frog-body"></use></svg>
+          </span>
+          <span class="phone__who">牛蛙</span>
+          <span class="phone__chip">演示</span>
+        </div>
+        <div class="phone__log" id="log" aria-live="polite"></div>
+        <div class="phone__input" aria-hidden="true">
+          <span>说点什么…</span>
+          <span class="phone__send"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 动手 ══════════════════ -->
+<section class="section work" id="work">
+  <div class="wrap demo__grid work__grid">
+
+    <div class="demo__side">
+      <p class="label reveal">它也能真的动手</p>
+      <h2 class="sec-h2 reveal">不是告诉你<br>怎么写，是写给你</h2>
+      <p class="demo__note reveal">
+        它跑在你自己的电脑上，用你真装了的 Python 和 Node。写一段、跑起来、
+        读报错、改一改、再跑——这个圈子它自己转，不用你盯着。
+      </p>
+      <p class="work__caveat reveal">
+        <strong>两条要说清楚的。</strong>
+        它能动你电脑上的东西，所以删文件、改系统设置这类命令会先弹窗问你一句，
+        点了「不要」它就不做。手机上没有这些——手机版只能跑 JavaScript，
+        读写文件、跑 Python 都不行，这一条它自己会如实说。
+        右边演示里那两块灰底小卡片是它的「工具痕迹」：干了什么、拿回什么，都摆在明面上。
+      </p>
+      <p class="demo__disclaimer reveal">
+        <strong>下面是演示。</strong>
+        这段也是照着 App 的 Windows 界面重画的预设过程，好让你看清它干活时的样子——
+        网页上并没有真的在跑代码，也没有后端。真实的运行结果就是演示里那样：
+        脚本、输出、退出码，都贴给你看。
+      </p>
+    </div>
+
+    <div class="win-wrap reveal">
+      <div class="win" role="img" aria-label="牛蛙在 Windows 上写脚本并运行的界面演示，内容为预设对话">
+        <div class="win__bar" aria-hidden="true">
+          <span class="win__dot"></span><span class="win__dot"></span><span class="win__dot"></span>
+          <span class="win__title">牛蛙</span>
+          <span class="phone__chip">演示</span>
+        </div>
+        <div class="win__log" id="worklog" aria-live="polite"></div>
+        <div class="win__input" aria-hidden="true">
+          <span>说点什么…</span>
+          <span class="win__send"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ 这一版 ══════════════════ -->
+<section class="section" id="new">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="label">它记得住</p>
+      <h2 class="sec-h2">它会记住你了</h2>
+    </header>
+
+    <div class="three__grid three__grid--four">
+
+      <article class="feat reveal">
+        <h3 class="feat__h">不用你说「记住」<span class="feat__num">01</span></h3>
+        <p class="feat__p">
+          聊到一定程度，它会自己回头翻一遍刚才说的话，把值得长期留着的东西收起来——
+          你的习惯、在做的事、在意的人。不必每次开口都先自我介绍一遍。
+        </p>
+      </article>
+
+      <article class="feat reveal">
+        <h3 class="feat__h">它记得的东西查得到<span class="feat__num">02</span></h3>
+        <p class="feat__p">
+          记忆页能看到全部条目，每条都标着是什么时候记下的。中文不用搜到一字不差：
+          你搜「猫咪」，它也能翻出「喜欢猫」那一条。
+        </p>
+      </article>
+
+      <article class="feat reveal">
+        <h3 class="feat__h">同一件事不留两版<span class="feat__num">03</span></h3>
+        <p class="feat__p">
+          你说过的话改了口，它更新原来那条，不会攒出两条互相打脸的记忆。
+          有几条看着像又拿不准是不是一回事的时候，它会指给你看，由你决定合不合。
+        </p>
+      </article>
+
+      <article class="feat reveal">
+        <h3 class="feat__h">记错了你自己改<span class="feat__num">04</span></h3>
+        <p class="feat__p">
+          每条记忆都能直接编辑，也能调它有多重要。重要的留得久，不重要的先让位——
+          记忆库不会越用越乱。
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 下载 ══════════════════ -->
+<section class="section dl" id="download">
+  <div class="wrap">
+    <header class="sec-head sec-head--center reveal">
+      <p class="label">带走</p>
+      <h2 class="sec-h2">下载</h2>
+      <p class="dl__lede">同一份东西，两个壳。聊的记录不会离开你的设备，两边也不用同一个账号。</p>
+    </header>
+
+    <div class="dl__grid">
+
+      <article class="dl__card reveal">
+        <div class="dl__top">
+          <span class="dl__os">安卓</span>
+          <span class="dl__ver">niuwa v14</span>
+        </div>
+        <p class="dl__file">niuwa-v14-arm64.apk</p>
+        <p class="dl__facts">23.9 MB <span class="sep">·</span> 需要 Android 7.0 或更高</p>
+        <a class="btn btn--primary btn--wide" href="assets/pkg/niuwa-v14-arm64.apk" download>下载 APK</a>
+        <p class="dl__fine">
+          装的时候系统会提示「未知来源」——允许一下就行，这个包没有上应用商店。
+        </p>
+        <p class="dl__alt">
+          手机比较老（四五年以前的）？<a href="assets/pkg/niuwa-v14-arm32.apk" download>下 32 位版（21.9 MB）</a>
+        </p>
+      </article>
+
+      <article class="dl__card reveal">
+        <div class="dl__top">
+          <span class="dl__os">Windows</span>
+          <span class="dl__ver">niuwa v14</span>
+        </div>
+        <p class="dl__file">niuwa-v14-windows.zip</p>
+        <p class="dl__facts">16.4 MB <span class="sep">·</span> 解压即用，不用安装</p>
+        <a class="btn btn--primary btn--wide" href="assets/pkg/niuwa-v14-windows.zip" download>下载压缩包</a>
+        <p class="dl__fine">
+          解压到哪儿都行，数据跟着文件夹走——放 U 盘里插到别的电脑上，设置和记录也一起跟着。
+          文件夹里那个「niuwa」快捷方式直接双击就能开。
+        </p>
+        <p class="dl__alt">
+          第一次打开 Windows 会拦一下（「Windows 已保护你的电脑」），点<strong>更多信息</strong>再点<strong>仍要运行</strong>。
+        </p>
+      </article>
+
+    </div>
+
+    <p class="dl__foot reveal">
+      两个包都没上商店、也没买代码签名证书，所以会有「未知来源」和「不受信任」的提示，这是正常的。
+      <br>手机版按 CPU 架构分开打包了：绝大多数手机下第一个就行，不用两个都下。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════ 页脚 ══════════════════ -->
+<footer class="foot">
+  <div class="wrap foot__in">
+    <div class="foot__brand">
+      <svg class="foot__mark" viewBox="0 0 100 100" aria-hidden="true"><use href="#frog-body"></use></svg>
+      <span class="foot__name">niuwa v14</span>
+    </div>
+    <p class="foot__author">开发者：刘汪承睿</p>
+    <p class="foot__fine">这个小站没有后端。它不收集任何东西，也没有地方可收。</p>
+  </div>
+</footer>
+
+<!--
+  青蛙的骨相，全站共用一份。
+  mask 里先画白（脸 + 两只眼睛的并集），再画黑（两个瞳孔）——后画的盖前面的，
+  所以瞳孔是"挖空"的洞，透出的是背后页面的底色。JS 挪的就是这两个洞。
+
+  坐标来自 app/lib/widgets/n1_mark.dart 的 FrogShape.standard，
+  以「标志边长」为单位 × 100（脸 2/40.5/96×46/r22.5，眼 cx32·68 cy30 r16.5，瞳 r7.2）。
+  改 App 那边的造型，这里的六个数要跟着改，不然网站和 App 会长成两只不同的青蛙。
+-->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <mask id="frog-mask">
+      <rect width="100" height="100" fill="#000"/>
+      <g fill="#fff">
+        <rect x="2" y="40.5" width="96" height="46" rx="22.5"/>
+        <circle cx="32" cy="30" r="16.5"/>
+        <circle cx="68" cy="30" r="16.5"/>
+      </g>
+      <circle class="pupil" id="pupil-l" cx="32" cy="30" r="7.2" fill="#000"/>
+      <circle class="pupil" id="pupil-r" cx="68" cy="30" r="7.2" fill="#000"/>
+    </mask>
+    <!-- fill 走 currentColor：用的地方设 color，做出来的就是那只青蛙。
+         导航、首屏、手机壳、页脚四处共这一份，改一处全跟着变。 -->
+    <g id="frog-body">
+      <rect width="100" height="100" fill="currentColor" mask="url(#frog-mask)"/>
+    </g>
+  </defs>
+</svg>
+
+<script src="app.js"></script>
+</body>
+</html>

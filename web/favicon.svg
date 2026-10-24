@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="牛蛙">
+  <!--
+    几何全部来自 app/lib/widgets/n1_mark.dart 的 FrogShape.standard，
+    用 0.15 的边距（N1AppIcon.padding）投到 100x100 上：
+
+      mark 坐标         × 70         + 15       = 这里
+      head  2 / 40.5 / 96x46 / r22.5          16.4 / 43.35 / 67.2x32.2 / r15.75
+      eyes  32,30 r16.5                       37.4,36 r11.55
+      pupil                 r7.2               r5.04
+
+    这两处对不上就是"图标跟界面对不上"，改一边记得改另一边。
+  -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#35A052"/>
+      <stop offset=".52" stop-color="#298643"/>
+      <stop offset="1" stop-color="#1F7237"/>
+    </linearGradient>
+    <mask id="frog">
+      <rect width="100" height="100" fill="#000"/>
+      <g fill="#fff">
+        <rect x="16.4" y="43.35" width="67.2" height="32.2" rx="15.75"/>
+        <circle cx="37.4" cy="36" r="11.55"/>
+        <circle cx="62.6" cy="36" r="11.55"/>
+      </g>
+      <g fill="#000">
+        <circle cx="37.4" cy="36" r="5.04"/>
+        <circle cx="62.6" cy="36" r="5.04"/>
+      </g>
+    </mask>
+  </defs>
+  <rect width="100" height="100" rx="22.5" fill="url(#g)"/>
+  <rect width="100" height="100" mask="url(#frog)" fill="#fff"/>
+</svg>

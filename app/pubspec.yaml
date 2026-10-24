@@ -1,0 +1,168 @@
+name: niuwa_ai
+description: "niuwa v14 · 牛蛙AI —— 陪你，也替你干活的 AI Agent"
+publish_to: 'none'
+
+version: 0.14.0+14
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # 中文的 Material 文案。不加这一条，文本选择菜单的"复制/粘贴"、弹窗的
+  # 无障碍标签这些系统控件会在中文界面里蹦英文。
+  flutter_localizations:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # 状态管理（与 A1 一致）
+  provider: ^6.1.5+1
+
+  # 网络：LLM 调用 + SSE 流式
+  http: ^1.2.2
+
+  # 浏览器自动化（Windows 端 CDP over WebSocket）
+  web_socket_channel: ^3.0.1
+
+  # 本地存储
+  #
+  # 〇 sqflite 在安卓上走系统自带的 SQLite；Windows/Linux/macOS 上**没有原生实现**，
+  #   得换成 ffi 工厂，否则 openDatabase 直接抛 "databaseFactory not initialized"。
+  #   接线在 N1Runtime.boot()。
+  # 〇 光有 ffi 还不够：SQLite 本身是个 C 库，桌面端要有人把 sqlite3.dll 打进包里，
+  #   那是 sqlite3_flutter_libs 干的活。少了它，桌面上会因为找不到动态库而崩。
+  sqflite: ^2.4.1
+  sqflite_common_ffi: ^2.3.4
+  sqlite3_flutter_libs: ^0.5.28
+  path: ^1.9.0
+  path_provider: ^2.1.5
+  # 下面这两个 platform_interface 都是**直接在代码里用了替换点**
+  # （见 services/data_root.dart），不是间接依赖，得显式声明。
+  #
+  # ⚠️ shared_preferences_platform_interface 那条不是为了好看：
+  #    shared_preferences_windows 的 Windows 实现绕开了
+  #    PathProviderPlatform.instance，设置会脱离便携目录落到 C 盘。
+  #    我们换掉它的存储层把它拉回来（见 services/prefs_store.dart）。
+  path_provider_platform_interface: ^2.1.2
+  shared_preferences: ^2.3.3
+  shared_preferences_platform_interface: ^2.4.2
+
+  # API Key 安全存储（Android Keystore / Windows DPAPI）
+  #
+  # ⚠️ 版本不能往下退。11.x 拉的 Windows 后端是 flutter_secure_storage_windows 4.x，
+  #    而 `dependency_overrides` 里挂的本地副本（third_party/）正是基于那个 4.x，
+  #    它要求 flutter_secure_storage_platform_interface 2.x。退回 9.x 的话，
+  #    9.x 要的是 1.x，跟副本对不上。
+  #
+  #    Windows 端为什么需要那份副本、以及怎么升级它：
+  #    third_party/flutter_secure_storage_windows/README-VENDORED.md
+  flutter_secure_storage: ^11.2.0
+
+  # http_fetch 工具：HTML 转纯文本
+  html: ^0.15.4
+
+  # Android 端浏览器自动化：隐藏 WebView
+  webview_flutter: ^4.10.0
+
+  # 选图：安卓端走系统相册/相机，Windows 端走文件选择器
+  #
+  # ⚠️ endorsement：平台实现包（image_picker_android / image_picker_windows …）
+  #    是 pub 自动带进来的，**不会**出现在这个文件里，只在 pubspec.lock 里挂着
+  #    transitive。想查"Windows 上哪个参数被静默忽略"，别在这儿找。
+  image_picker: ^1.2.3
+
+  # 压图：解码 + 缩放 + 重编码成 JPEG，纯 Dart（core/image/image_prep.dart）
+  image: ^4.10.1
+  pdf: ^3.13.1
+  archive: ^4.5.2
+  file_selector: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  # 图标生成
+  flutter_launcher_icons: ^0.14.1
+
+# 本地改过的依赖，只有这一条。
+#
+# flutter_secure_storage_windows 上游同时声明了 `pluginClass`（一个 C++ 插件，
+# 头部 `#include <atlstr.h>`，并真的用了 ATL 的 CA2T/CT2A 宏）和
+# `dartPluginClass`（纯 Dart FFI 实现，直接调 Windows DPAPI）。
+# 前者要求本机装 ATL 组件才编得过，而 Flutter 会编译**依赖图里每一个**
+# 注册了原生 pluginClass 的插件——哪怕我们根本不调它，也照样编。
+#
+# `third_party/` 那份是把上游的 pluginClass 和 windows/ 目录摘掉的副本，
+# 只留 dartPluginClass。代价是要自己跟上游的版本，收益是 Windows 端
+# 不需要装 ATL 就能编。取舍和升级步骤写在 third_party/.../README-VENDORED.md。
+dependency_overrides:
+  flutter_secure_storage_windows:
+    path: third_party/flutter_secure_storage_windows
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    # ⚠️ Flutter 声明目录**只收该目录下的直接文件，不递归子目录**。
+    # 技能是 assets/skills/<名字>/SKILL.md 这种结构，所以每个子目录都得单列一行，
+    # 否则打包时一个技能都不会被带进去，运行时技能列表是空的——而且不报错。
+    - assets/skills/web-research/
+    - assets/skills/browser-task/
+    - assets/skills/note-taking/
+    - assets/skills/companion-talk/
+    - assets/skills/nuwa/
+    - assets/skills/coding/
+    - assets/skills/debugging/
+    - assets/skills/planning/
+    - assets/skills/review/
+    - assets/skills/testing/
+    - assets/persona/
+    # 生成 PDF 时嵌进文档里的中文字体（Noto Sans SC 子集）。
+    # 单列文件而不是整个目录：assets/fonts/ 里还有 UI 用的两套字体和授权文本，
+    # 那些不该跟着进 assets（字体族那条已经单独声明过了）。
+    - assets/fonts/NotoSansSC-subset.ttf
+
+  fonts:
+    # 两个都是**可变字体**（含 fvar 表）。字重用 TextStyle 的 fontVariations
+    # 指定，不是 fontWeight —— 可变字体上后者在部分平台不会真的插值。
+    #
+    # 授权：都是 SIL OFL，允许随包分发。授权原文在 assets/fonts/ 里。
+    - family: SpaceGrotesk
+      fonts:
+        - asset: assets/fonts/SpaceGrotesk.ttf
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono.ttf
+
+# 图标生成配置。跑法：`dart run flutter_launcher_icons`
+#
+# 三张图都来自 `tool/generate_icons.dart`，而那个脚本画的是跟界面里**同一个**
+# `N1Mark`——所以"图标改了界面忘了改图标"这种漂移不会发生。
+flutter_launcher_icons:
+  image_path: "assets/icon/app_icon.png"
+
+  android: "launcher_icon"
+  # 自适应图标。背景用平的主色（#298643，正是那个渐变的中间值）。
+  #
+  # 前景必须是**透明底 + 缩小的牛蛙**：安卓会把它裁成圆的、方的、水滴的，
+  # 安全区只有中间约 66%，按原尺寸画的话牛蛙的两只眼睛会被切掉。
+  # 缩小这一步在 generate_icons.dart 里（`N1Mark(size: 92)`）。
+  adaptive_icon_background: "#298643"
+  adaptive_icon_foreground: "assets/icon/app_icon_foreground.png"
+
+  # iOS 不在交付范围里（只出 APK / exe / 网站）。
+  ios: false
+
+  # 桌面端要一个多尺寸 .ico，任务栏和资源管理器各取所需。
+  windows:
+    generate: true
+    image_path: "assets/icon/app_icon.png"
+    icon_size: 256
+
+  # 网站是**另外单独做**的（不是 Flutter web 构建），favicon 到时候直接用
+  # assets/icon/mark.png，不走这里。
+  web:
+    generate: false

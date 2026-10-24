@@ -1,0 +1,14 @@
+# 只声明 tag，不改任何默认行为。
+#
+# 不声明的话 `flutter test` 每次都会打一行
+# 「Warning: A tag was used that wasn't specified in dart_test.yaml」——
+# 警告多了就没人看了，那比不打还糟。
+tags:
+  # 会真的开一个浏览器窗口、连外网、花十几秒。
+  #
+  # 这些用例自己会在没设 `N1_LIVE_BROWSER=1` 时跳过（见
+  # test/browser/live_cdp_smoke_test.dart），所以常规 `flutter test` 不受影响。
+  # 要真跑：
+  #
+  #   N1_LIVE_BROWSER=1 flutter test test/browser/live_cdp_smoke_test.dart
+  live:
