@@ -991,6 +991,24 @@ code {
 .foot__mark { width: 24px; height: 24px; color: var(--accent); }
 .foot__name { font-size: 14.5px; font-weight: 600; letter-spacing: -.01em; }
 .foot__author { font-size: 13.5px; color: var(--dim); }
+.foot__gh {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--dim);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .2s var(--out), border-color .2s var(--out);
+}
+.foot__gh svg { width: 15px; height: 15px; }
+.foot__gh:hover { color: var(--accent); border-bottom-color: currentColor; }
+.foot__gh:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
 .foot__fine { margin-top: 10px; font-size: 12.5px; color: var(--faint); }
 
 /* ── 滚动出现 ──────────────────────────────────────────────────── */

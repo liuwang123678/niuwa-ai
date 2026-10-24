@@ -6,6 +6,12 @@
 - Android 7.0+ / Windows 10+
 - 当前版本：v14
 
+<p align="center">
+  <img src="docs/screenshots/desktop.png" width="720" alt="桌面端聊天界面">
+  <img src="docs/screenshots/mobile.png" width="210" alt="窄屏聊天界面">
+</p>
+<p align="center"><sub>界面演示。窄屏布局与 Android 端是同一套代码。</sub></p>
+
 ## 它是什么
 
 niuwa 有两个面：聊天时是个有性格、记得住事的陪伴者；需要干活时，它有一整套工具，能真的动你的文件、开浏览器、写代码并跑起来。
