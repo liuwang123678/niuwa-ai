@@ -3,6 +3,7 @@
 **能陪你，也替你干活的 AI Agent。** 一套 Flutter 代码，出 Android 和 Windows。
 
 - 官网与下载：<https://niuwa-ai.pages.dev>
+- 安装包（历史版本）：<https://github.com/liuwang123678/niuwa-ai/releases>
 - Android 7.0+ / Windows 10+
 - 当前版本：v14
 
